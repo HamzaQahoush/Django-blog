@@ -2,9 +2,31 @@
 
 - Django blog
 - python manage.py createsuperuser
-- python manage.py makemigrations
-- python manage.py migrate
+- python manage.py makemigrations :
 
+ => generates the SQL commands for preinstalled apps (which can be viewed in installed apps in settings.py) and your newly created apps' model which you add in installed apps
+
+- python manage.py migrate : 
+
+=> migrate executes those SQL commands in the database file.
+
+- To show the SQL query which created the table :
+`python manage.py sqlmigrate ModelName migrationNo`
+- example :
+`python manage.py sqlmigrate blog 0001`
+
+- we can access the user data by : 
+
+`user.ModelName_set.all()` example `user.Post_set.all()`
+
+where user is object we created , `<User: hamza92>`
+
+- we can create data for specific user : 
+
+`user.ModelName_set.create(title="etc...")`
+
+
+- `admin.site.register(ModelName)` # to give admin all access to the post model , add, update,delete
 ## create simplified API using django rest framework 
 
 ## steps:
