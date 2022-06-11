@@ -114,7 +114,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # full path where uploaded files on system
+MEDIA_URL = '/media/'  # how access the image in browser,
 if not DEBUG:
     STATIC_ROOT = ''
 
@@ -127,4 +128,4 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'blog-home'  # to redirect home after login
-LOGIN_URL = "login" # redirect user if you want access "log in required page"
+LOGIN_URL = "login"  # redirect user if you want access "log in required page"
