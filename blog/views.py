@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from .models import Post
+from django.contrib.auth.models import User
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -18,11 +19,27 @@ def home(request):
 class PostListView(ListView):
     model = Post
     template_name = "blog/home.html"
+    context_object_name = 'posts'
+    paginate_by = 5
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['posts'] = Post.objects.all()
-        return context
+
+class UserPostListView(ListView):
+    model = Post
+    template_name = "blog/user_posts.html"
+    context_object_name = 'posts'
+    paginate_by = 5
+
+    def get_queryset(self):
+        """
+        to modify the queryset that list view returns
+        :return:
+        """
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        # to get username from url -> self.kwargs.get('username')
+        # filter post by the user we got, then order it.
+        return Post.objects.filter(author_id=user).order_by('-data_posted')
+
+
 
 
 class PostDetailView(DetailView):
