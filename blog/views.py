@@ -40,8 +40,6 @@ class UserPostListView(ListView):
         return Post.objects.filter(author_id=user).order_by('-data_posted')
 
 
-
-
 class PostDetailView(DetailView):
     model = Post
 
